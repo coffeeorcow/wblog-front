@@ -1,6 +1,6 @@
 <template>
 <div class="header">
-    <Menu mode="horizontal" theme="dark">
+    <Menu mode="horizontal" theme="dark" @on-select="select">
         <Row type="flex" justify="space-between">
             <Col span="4">
             <router-link to="/">
@@ -29,6 +29,23 @@
     </Menu>
 </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+        }
+    },
+
+    methods: {
+        select(name) {
+            if (name == 3)
+                this.$emit('login-event')
+        }
+    }
+}
+</script>
+
 
 <style scoped>
 .logo {
