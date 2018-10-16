@@ -6,7 +6,8 @@ import Comments from '@/components/Comments'
 import Password from '@/components/Password'
 import UserInfo from '@/components/UserInfo'
 import About from '@/components/About'
-import Login from '@/components/Login'
+import Reg from '@/components/Reg'
+import Publish from '@/components/Publish'
 
 
 Vue.use(Router)
@@ -17,6 +18,15 @@ export default new Router({
     {
       path: '/',
       component: Home
+    },
+    {
+      path: '/reg',
+      component: Reg
+    },
+    {
+      // 发表文章
+      path: '/publish',
+      component: Publish
     },
     {
       path: '/articles',

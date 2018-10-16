@@ -7,9 +7,13 @@ import router from './router'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 
+import iEditor from 'iview-editor'
+import 'iview-editor/dist/iview-editor.css'
+
 Vue.config.productionTip = false
 
 Vue.use(iView);
+Vue.use(iEditor);
 
 /* eslint-disable no-new */
 new Vue({

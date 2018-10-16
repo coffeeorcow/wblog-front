@@ -14,7 +14,7 @@
                 </MenuItem>
             </col>
             <Col span="6">
-                <MenuItem name="2">
+                <MenuItem name="2" to="/publish">
                     <Icon type="md-create" />
                         发表文章
                 </MenuItem>
