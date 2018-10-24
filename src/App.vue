@@ -4,11 +4,11 @@
     <Header class="header">
       <MyHeader v-on:login-event="goLogin"/>
     </Header>
-    <Layout>
+    <Layout style="background: #ffffff;">
       <Sider hide-trigger class="nav">
         <Nav />
       </Sider>
-      <Content>
+      <Content style="margin-left: 20px;">
         <router-view />
       </Content>
     </Layout>
