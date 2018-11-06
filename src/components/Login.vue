@@ -1,6 +1,6 @@
 <template>
     <Modal
-        v-model="showLogin"
+        v-model="show"
         title="登录"
         @on-ok="login"
         @on-cancel="cancel">
@@ -18,13 +18,22 @@ export default {
 
     data() {
         return {
-            
+            show: this.showLogin
         }
     },
     
     methods: {
         login() {
             console.log('login..');
+            let user = {
+                id: 1,
+                userName: 'user1',
+                email: 'user1@gmail.com',
+                avatar: 'https://xxx.com'
+                // gender: 1
+            }
+            console.log(user);
+            this.$store.commit('setInfo', user);
             this.$emit('login-out');
             this.$router.push('/');
         },
