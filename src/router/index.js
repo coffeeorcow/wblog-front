@@ -8,6 +8,7 @@ import UserInfo from '@/components/UserInfo'
 import About from '@/components/About'
 import Reg from '@/components/Reg'
 import Publish from '@/components/Publish'
+import Login from '@/components/Login'
 
 
 Vue.use(Router)
@@ -19,6 +20,10 @@ export default new Router({
       path: '/',
       component: Home
     },
+		{
+			path: '/login',
+			component: Login
+		},
     {
       path: '/reg',
       component: Reg

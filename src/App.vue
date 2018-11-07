@@ -2,7 +2,7 @@
 <div id="app">
   <Layout>
     <Header class="header">
-      <MyHeader v-on:login-event="goLogin"/>
+      <MyHeader/>
     </Header>
     <Layout style="background: #ffffff;">
       <Sider hide-trigger class="nav">
@@ -13,8 +13,6 @@
       </Content>
     </Layout>
   </Layout>
-
-  <Login :show-login="showLogin" v-on:login-out="outLogin"/>
 </div>
 </template>
 
@@ -27,23 +25,7 @@ export default {
   name: 'App',
   components: {
     MyHeader,
-    Nav,
-    Login
-  },
-
-  data() {
-    return {
-      showLogin: false
-    }
-  },
-
-  methods: {
-    goLogin() {
-      this.showLogin = true
-    },
-    outLogin() {
-      this.showLogin = false
-    }
+    Nav
   }
 }
 </script>

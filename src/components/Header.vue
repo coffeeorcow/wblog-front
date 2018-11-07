@@ -40,7 +40,7 @@ export default {
     methods: {
         select(name) {
             if (name == 3)
-                this.$emit('login-event')
+                this.$router.push('/login');
         }
     }
 }

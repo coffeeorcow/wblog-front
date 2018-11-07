@@ -1,36 +1,38 @@
 <template>
-    <Card style="width: 500px" class="reg">
-        <Form :model="regForm" :label-width="80">
-            <FormItem label="邮箱">
-                <Input v-model="regForm.email" type="email"></Input>
-            </FormItem>
-            <FormItem label="用户名">
-                <Input v-model="regForm.userName" type="text"></Input>
-            </FormItem>
-            <FormItem label="密码">
-                <Input v-model="regForm.pwd" type="password"></Input>
-            </FormItem>
-            <FormItem label="确认密码">
-                <Input v-model="regForm.validate" type="password" placeholder="再次输入密码"></Input>
-            </FormItem>
-            <FormItem>
-                <Button type="primary">注册</Button>
-                <Button style="margin-left: 8px">取消</Button>
-            </FormItem>
-        </Form>
-    </Card>
+<Row type="flex" justify="center" align="middle">
+    <Col :span="12">
+        <Card style="margin:0px auto; width=450px;">
+            <p slot="title">注册</p>
+            <p style="color: red;">{{ msg }}</p>
+            <label for="user.UserName">用户名</label>
+            <Input v-model="userName" id="userName" required type="text"/>
+            <br><br>
+            <label for="pwd">密码</label>
+            <Input v-model="password" id="pwd" required type="password"/>
+            <br><br>
+            <label for="validate">确认密码</label>
+            <Input v-model="validate" id="validate" required type="password"/>
+            <br><br>
+            <label for="email">电子邮箱地址</label>
+            <Input v-model="email" id="email" required type="email" placeholder="如: xxx@gmail.com"/>
+            <br><br>
+            <Button type="info" @click="reg">注册</Button>
+            <br><br>
+            <router-link to="/login">已有账户？点击登录</router-link>
+        </Card>
+    </Col>
+</Row>
 </template>
 
 <script>
 export default {
     data() {
         return {
-            regForm: {
-                email: '',
-                userName: '',
-                pwd: '',
-                validate: ''
-            }
+            userName: '',
+            password: '',
+            validate: '',
+            email: '',
+            msg: ''
         }
     }
 }
