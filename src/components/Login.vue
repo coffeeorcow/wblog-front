@@ -8,7 +8,7 @@
             <Input v-model="userName" id="userName" required />
             <br><br>
             <label for="pwd">密码</label>
-            <Input v-model="password" id="pwd" required />
+            <Input v-model="password" id="pwd" required  @keyup.enter="login" />
             <br><br>
             <Button type="success" @click="login">登录</Button>
             <br><br>
@@ -30,17 +30,26 @@ export default {
 
   methods: {
     login() {
-      console.log("login..");
-      let user = {
-        id: 1,
-        userName: "user1",
-        email: "user1@gmail.com",
-        avatar: "https://xxx.com",
-        gender: 1
-      };
-      console.log(user);
-      this.$store.commit("setInfo", user);
-      this.$router.push("/");
+      console.log('click login');
+      this.$axios.post('/api/login', {
+        userName: this.userName,
+        password: this.password
+      })
+      .then(res => {
+        console.log(res.data);
+        alert(res.data.msg);
+        let user = {}
+        this.$axios.get('/api/user/name', {
+          userName: this.userName
+        })
+        .then(u => {
+          console.log(u);
+          console.log(user);
+          user = u.data;
+          this.$store.commit("setInfo", user);
+        });
+        this.$router.push("/");
+      });
     },
     reg() {
       console.log("reg");

@@ -11,10 +11,14 @@ import 'iview/dist/styles/iview.css'
 import iEditor from 'iview-editor'
 import 'iview-editor/dist/iview-editor.css'
 
+import axios from 'axios'
+
 Vue.config.productionTip = false
 
 Vue.use(iView);
 Vue.use(iEditor);
+
+Vue.prototype.$axios = axios;
 
 /* eslint-disable no-new */
 new Vue({
