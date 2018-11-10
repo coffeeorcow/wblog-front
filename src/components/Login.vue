@@ -8,11 +8,11 @@
             <Input v-model="userName" id="userName" required />
             <br><br>
             <label for="pwd">密码</label>
-            <Input v-model="password" id="pwd" required  @keyup.enter="login" />
+            <Input v-model="password" id="pwd" required  @keyup.enter.native="login" />
             <br><br>
             <Button type="success" @click="login">登录</Button>
             <br><br>
-            <router-link to="/reg" style="color: red;">还没有账户？现在注册</router-link>
+            <router-link to="/reg" style="color: green;">还没有账户？现在注册</router-link>
         </Card>
     </Col>
 </Row>
@@ -37,22 +37,29 @@ export default {
       })
       .then(res => {
         console.log(res.data);
-        alert(res.data.msg);
-        let user = {}
-        this.$axios.get('/api/user/name', {
-          userName: this.userName
-        })
-        .then(u => {
-          console.log(u);
-          console.log(user);
-          user = u.data;
-          this.$store.commit("setInfo", user);
-        });
-        this.$router.push("/");
+        let code = res.data.code;
+        if (code == 'success') {
+          // 存储用户信息
+          let user = {}
+          this.$axios.get('/api/user/name?userName='+ this.userName)
+          .then(u => {
+            user = u.data;
+            this.$store.commit("setInfo", user);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+          this.$router.push("/");
+        } else {
+          this.msg = res.data.msg;
+        }
+      })
+      .catch(err => {
+        this.msg = err.data.error;
       });
     },
     reg() {
-      console.log("reg");
+      console.log("user");
       this.$router.push("/reg");
     }
   }

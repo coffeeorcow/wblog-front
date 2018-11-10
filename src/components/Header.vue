@@ -39,8 +39,17 @@ export default {
 
     methods: {
         select(name) {
-            if (name == 3)
+            if (name == 3) {
+                console.log('clicked link of login');
                 this.$router.push('/login');
+            }else if (name == 4) {
+                console.log('clicked link of logout');
+                this.$store.commit('clearInfo');
+                this.$router.push('/');
+                this.$axios.get('/api/logout')
+                .then(msg => console.log(msg.data));
+                alert('注销成功');
+            }
         }
     }
 }
