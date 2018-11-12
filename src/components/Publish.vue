@@ -10,9 +10,15 @@
                 </Col>
                 <!-- 选择分类 -->
                 <Col :span="7">
-                    <label for="cates"><span style="font-size: 15px; color: purple">分类&nbsp;</span></label>
-                    <Select id="cates" v-model="article.cate" style="width:200px">
-                        <Option v-for="(item, index) in cates" :value="item" :key="index">{{ item }}</Option>
+                    <label for="category"><span style="font-size: 15px; color: purple">分类&nbsp;</span></label>
+                    <Select id="category"
+                        v-model="cate.cateName"
+                        filterable
+                        remote
+                        :remote-method="getCates"
+                        :loading="loading"
+                        style="width:200px">
+                        <Option v-for="(option, index) in cates" :value="option.cateName" :key="index">{{ option.cateName }}</Option>
                     </Select>
                 </Col>
                 <!-- 添加标签 -->
@@ -27,6 +33,7 @@
             </Row>
             <Row>
                 <Col>
+                    <span style="color: red;">添加标签，分类、管理、查找等更方便！</span>
                     <!-- 此处显示所选择的标签 -->
                     <Tag v-for="(item,index) in tags" 
                     :key="index" :name="item" closable @on-close="closeTag">
@@ -47,25 +54,25 @@ export default {
                 minRows: 20,
                 maxRows: 40
             },
-            cates: [
-                'Java',
-                'Scale',
-                'Kotlin'
-            ],
+            loading: false,
+            cates: [{id: 0, cateName: '', createdTime: ''}],
+            tags: [],
             tagName: '',
+            cate: {
+                id: 0,
+                cateName: ''
+            },
 
             // 文章信息
             article : {
                 title: '',
-                tags: [
-                    'Java', 'Markdown', 'Juile'
-                ],
                 content: '',
                 user: {
                     id: this.$store.state.user.id
                 },
                 cate: {
-                    id: 0
+                    id: 0,
+                    cateName: ''
                 }
             }
             
@@ -73,7 +80,7 @@ export default {
     },
 
     methods: {
-        // 登录操作
+
         publish() {
             // 验证文章信息的完整性和有效性
             // 发表文章
@@ -85,6 +92,7 @@ export default {
             if (this.tagName!='') {
                 this.tags.push(this.tagName);
             }
+            this.tagName = '';
         },
 
         // 删除标签
@@ -92,6 +100,29 @@ export default {
             console.log('deleted ' + name);
             let index = this.tags.indexOf(name);
             this.tags.splice(index, 1);
+        },
+
+        // 获取分类
+        getCates(query) {
+            if (query != '') {
+                this.loading = true;
+                // 请求分类信息
+                console.log('query:' + query);
+                this.$axios.get('/api/cate/like?cateName=' + query)
+                .then(m => {
+                    this.cates = m.data;
+                    this.loading = false;
+                });
+            } else {
+                this.loading = true;
+                console.log('query is : ' + query);
+                this.$axios.get('/api/cate/all')
+                .then(m => {
+                    this.cates = m.data;
+                    this.loading = false;
+                });
+                this.loading = false;
+            }
         }
     }
 }
