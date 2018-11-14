@@ -55,7 +55,7 @@ export default {
                 maxRows: 40
             },
             loading: false,
-            cates: [{id: 0, cateName: '', createdTime: ''}],
+            cates: [],
             tags: [],
             tagName: '',
             cateName: '',
@@ -65,7 +65,7 @@ export default {
                 title: '',
                 content: '',
                 user: {
-                    id: this.$store.state.user.id
+                    id: 0
                 },
                 cate: {
                     id: 0,
@@ -80,12 +80,14 @@ export default {
     methods: {
 
         publish() {
+            // 设置用户信息
+            this.article.user.id = this.$store.state.user.id;
             // 验证文章信息的完整性和有效性
             if (this.article.title == '') {
                 alert('标题不能位空！');
                 return;
-            } else if (this.cateName == '') {
-                alert('请选择分类!');
+            } else if (this.cateName == '' || this.cates.length == 0) {
+                alert('没有该分类，请选择已有分类!');
                 return;
             } else if (this.article.user.id == null || this.article.user.id == 0) {
                 alert('请先登录！');
@@ -95,12 +97,8 @@ export default {
                 alert('文章内容不能位空！');
             }
             // 组装文章信息
-            for (let c = 0; c < this.cates.length; c++) {
-                if (cates[c].cateName == this.cateName) {
-                    this.article.cate = this.cates[c];
-                    break;
-                }
-            }
+            this.article.cate = this.cates[0];
+            console.log(this.article.cate);
 
             for (let t = 0; t < this.tags.length; t++) {
                 this.article.tags.push({tagName: tags[t]});
