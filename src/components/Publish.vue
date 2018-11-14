@@ -12,7 +12,7 @@
                 <Col :span="7">
                     <label for="category"><span style="font-size: 15px; color: purple">分类&nbsp;</span></label>
                     <Select id="category"
-                        v-model="cate.cateName"
+                        v-model="cateName"
                         filterable
                         remote
                         :remote-method="getCates"
@@ -58,10 +58,7 @@ export default {
             cates: [{id: 0, cateName: '', createdTime: ''}],
             tags: [],
             tagName: '',
-            cate: {
-                id: 0,
-                cateName: ''
-            },
+            cateName: '',
 
             // 文章信息
             article : {
@@ -73,7 +70,8 @@ export default {
                 cate: {
                     id: 0,
                     cateName: ''
-                }
+                },
+                tags: []
             }
             
         }
@@ -83,12 +81,42 @@ export default {
 
         publish() {
             // 验证文章信息的完整性和有效性
+            if (this.article.title == '') {
+                alert('标题不能位空！');
+                return;
+            } else if (this.cateName == '') {
+                alert('请选择分类!');
+                return;
+            } else if (this.article.user.id == null || this.article.user.id == 0) {
+                alert('请先登录！');
+                this.$router.push('/login');
+                return;
+            } else if(this.content == '') {
+                alert('文章内容不能位空！');
+            }
+            // 组装文章信息
+            for (let c = 0; c < this.cates.length; c++) {
+                if (cates[c].cateName == this.cateName) {
+                    this.article.cate = this.cates[c];
+                    break;
+                }
+            }
+
+            for (let t = 0; t < this.tags.length; t++) {
+                this.article.tags.push({tagName: tags[t]});
+            }
+
             // 发表文章
+            console.log(this.article);
+            this.$axios.post('/api/article/add', this.article)
+            .then(m => {
+                console.log(m.data);
+            });
         },
 
         // 添加标签
         addTag() {
-            console.log('added tag is' + this.tagName);
+            // console.log('added tag is ' + this.tagName);
             if (this.tagName!='') {
                 this.tags.push(this.tagName);
             }
@@ -97,7 +125,7 @@ export default {
 
         // 删除标签
         closeTag(event, name) {
-            console.log('deleted ' + name);
+            // console.log('deleted ' + name);
             let index = this.tags.indexOf(name);
             this.tags.splice(index, 1);
         },
@@ -107,7 +135,7 @@ export default {
             if (query != '') {
                 this.loading = true;
                 // 请求分类信息
-                console.log('query:' + query);
+                // console.log('query:' + query);
                 this.$axios.get('/api/cate/like?cateName=' + query)
                 .then(m => {
                     this.cates = m.data;
@@ -115,7 +143,7 @@ export default {
                 });
             } else {
                 this.loading = true;
-                console.log('query is : ' + query);
+                // console.log('query is : ' + query);
                 this.$axios.get('/api/cate/all')
                 .then(m => {
                     this.cates = m.data;

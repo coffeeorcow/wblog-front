@@ -5,10 +5,10 @@
             <p slot="title">登录</p>
             <p style="color: red;">{{ msg }}</p>
             <label for="userName">用户名</label>
-            <Input v-model="userName" id="userName" required />
+            <Input type="text" v-model="userName" id="userName" required />
             <br><br>
             <label for="pwd">密码</label>
-            <Input v-model="password" id="pwd" required  @keyup.enter.native="login" />
+            <Input type="password" v-model="password" id="pwd" required  @keyup.enter.native="login" />
             <br><br>
             <Button type="success" @click="login">登录</Button>
             <br><br>
@@ -49,7 +49,7 @@ export default {
           .catch(error => {
             console.log(error);
           });
-          this.$router.push("/");
+          this.$router.go(-1);
         } else {
           this.msg = res.data.msg;
         }
