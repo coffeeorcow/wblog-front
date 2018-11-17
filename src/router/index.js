@@ -17,14 +17,17 @@ export default new Router({
   mode: 'history',
   routes: [
     {
+      // 首页
       path: '/',
       component: Home
     },
 		{
+      // 登录页
 			path: '/login',
 			component: Login
 		},
     {
+      // 注册页
       path: '/reg',
       component: Reg
     },
@@ -34,22 +37,27 @@ export default new Router({
       component: Publish
     },
     {
+      // 我的文章
       path: '/articles',
       component: Articles
     },
     {
+      // 我的评论
       path: '/comments',
       component: Comments
     },
     {
+      // 用户信息修改
       path: '/user',
       component: UserInfo
     },
     {
+      // 密码修改
       path: '/password',
       component: Password
     },
     {
+      // About 页面
       path: '/about',
       component: About
     }

@@ -30,7 +30,7 @@ export default {
 
   methods: {
     login() {
-      console.log('click login');
+      // console.log('click login');
       this.$axios.post('/api/login', {
         userName: this.userName,
         password: this.password

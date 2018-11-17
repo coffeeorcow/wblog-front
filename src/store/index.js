@@ -12,7 +12,8 @@ export default new Vuex.Store({
             email: '',
             avatar: '',
             gender: 0 
-        }
+        },
+        query: ''
     },
     mutations: {
         setInfo(state, user) {
@@ -23,6 +24,7 @@ export default new Vuex.Store({
             state.user.avatar = user.avatar;
             state.user.gender = user.gender;
         },
+
         clearInfo(state) {
             state.isLogin = false;
             state.user.id = 0;
@@ -30,6 +32,10 @@ export default new Vuex.Store({
             state.user.email = '';
             state.user.avatar = '';
             state.user.gender = 0;
+        },
+
+        setQuery(state, query) {
+            state.query = query;
         }
     }
 });

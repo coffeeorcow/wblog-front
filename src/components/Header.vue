@@ -10,7 +10,7 @@
             <Col span="9"></col>
             <Col span="5">
                 <MenuItem name="1">
-                    <Input search placeholder="搜索相关文章" />
+                    <Input search placeholder="搜索相关文章" v-model="query" :on-enter="search"/>
                 </MenuItem>
             </col>
             <Col span="6">
@@ -34,6 +34,7 @@
 export default {
     data() {
         return {
+            query: ''
         }
     },
 
@@ -50,6 +51,16 @@ export default {
                 .then(msg => console.log(msg.data));
                 alert('注销成功');
             }
+        },
+
+        search() {
+            if (this.query.trim() == '') {
+                alert('请输入查询内容！');
+                return;
+            }
+            this.$store.commit('setQuery', this.query);
+            this.$router.push('/');
+            this.query = '';
         }
     }
 }
