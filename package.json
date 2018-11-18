@@ -1,7 +1,7 @@
 {
-  "name": "blog-front",
+  "name": "wblog-front",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "wblog's front-end",
   "author": "wjy <1875256338@qq.com>",
   "private": true,
   "scripts": {
