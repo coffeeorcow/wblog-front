@@ -40,8 +40,8 @@ export default {
       // 无参情况
       this.$axios.get("/api/article/all").then(m => {
         this.articles = m.data;
-        console.log("articles: ");
-        console.log(this.articles);
+        // console.log("articles: ");
+        // console.log(this.articles);
       });
     }
     this.$store.commit("setQuery", "");
@@ -49,8 +49,10 @@ export default {
 
   methods: {
     detail(id) {
-      console.log('you clicked id ' + id);
-      // 根据 id 查看相关文章的详情
+      // console.log('you clicked id ' + id);
+      // 设置 vuex 中的 article.id 为选中的文章id
+      this.$store.commit('setArticle', id);
+      this.$router.push('/detail');
     }
   }
 };

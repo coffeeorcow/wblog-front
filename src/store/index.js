@@ -13,7 +13,10 @@ export default new Vuex.Store({
             avatar: '',
             gender: 0 
         },
-        query: ''
+        query: '',
+        article: {
+            id: 0
+        }
     },
     mutations: {
         setInfo(state, user) {
@@ -36,6 +39,10 @@ export default new Vuex.Store({
 
         setQuery(state, query) {
             state.query = query;
+        },
+
+        setArticle(state, id) {
+            state.article.id = id;
         }
     }
 });

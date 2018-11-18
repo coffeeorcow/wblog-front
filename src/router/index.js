@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
+import Detail from '@/components/Detail'
 import Articles from '@/components/Articles'
 import Comments from '@/components/Comments'
 import Password from '@/components/Password'
@@ -20,6 +21,11 @@ export default new Router({
       // 首页
       path: '/',
       component: Home
+    },
+    {
+      // 详情页
+      path: '/detail',
+      component: Detail
     },
 		{
       // 登录页
