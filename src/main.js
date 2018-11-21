@@ -13,12 +13,16 @@ import 'iview-editor/dist/iview-editor.css'
 
 import axios from 'axios'
 
+import markdownIt from 'markdown-it'
+
 Vue.config.productionTip = false
 
 Vue.use(iView);
 Vue.use(iEditor);
 
 Vue.prototype.$axios = axios;
+
+Vue.prototype.$markdownIt = markdownIt;
 
 /* eslint-disable no-new */
 new Vue({

@@ -8,8 +8,7 @@
                 </Tag>
                 <br><br><hr class="divide-line"/><br><br>
             </div>
-            <div class="content">
-                {{ article.content }}
+            <div class="content" v-html="article.content">
             </div>
             <div class="comment">
             </div>
@@ -52,7 +51,8 @@ export default {
           }
       },
       color: ['red', 'green', 'blue', 'volcano', 'purple', 'lime', 'orange', 'gold', 'yellow'],
-      createdTime: ''
+      createdTime: '',
+      msg: ''
     };
   },
 
@@ -61,7 +61,9 @@ export default {
     this.$axios.get("/api/article/get?id=" + id).then(m => {
         this.article = m.data;
         this.createdTime = new Date(String(this.article.createdTime).replace('T', ' ').replace('-', '/').slice(0, 19));
+        this.article.content = this.$markdownIt().render(this.article.content);
     });
+    this.msg = this.$markdownIt().render('# markdownIt ruzzle');
   }
 };
 </script>

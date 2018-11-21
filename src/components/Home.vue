@@ -12,7 +12,7 @@
             <Avatar slot="extra" v-if="item.user.avatar == null || item.user.avatar == ''"
               icon="ios-person"></Avatar>
             <Avatar slot="extra" v-else="item" :src="item.user.avatar"></Avatar>
-            <p class="content">{{ item.content }}</p>
+            <div v-html="item.content" class="content"></div>
           </Card>
       </Col>
     </Row>
@@ -23,28 +23,73 @@
 export default {
   data() {
     return {
-      articles: []
+      articles: [],
+      query: ''
     };
   },
 
-  mounted() {
-    let query = this.$store.state.query;
-    if (query != "") {
+  computed: {
+    getQuery() {
+      return this.$store.state.query;
+    }
+  },
+
+  watch: {
+    getQuerys(val) {
+      this.query = val;
+      if (this.query != "") {
       // 有参情况
-      this.$axios.get("/api/article?query=" + query).then(m => {
+      this.$axios.get("/api/article?query=" + this.query).then(m => {
         this.articles = m.data;
-        console.log("articles: ");
-        console.log(this.articles);
+        console.log('query is ' + this.query);
+        for (let t in this.articles) {
+          console.log('渲染前：' + this.articles[t].content);
+          this.articles[t].content = this.$markdownIt().render(this.articles[t].content);
+          console.log('渲染后：' + this.articles[t].content);
+        }
       });
     } else {
       // 无参情况
       this.$axios.get("/api/article/all").then(m => {
         this.articles = m.data;
-        // console.log("articles: ");
-        // console.log(this.articles);
+        
+        for (let t in this.articles) {
+          this.articles[t].content = this.$markdownIt().render(this.articles[t].content);
+        }
       });
     }
     this.$store.commit("setQuery", "");
+    }
+  },
+
+  mounted() {
+    let query = this.$store.state.query;
+    // if (query != "") {
+    //   // 有参情况
+    //   this.$axios.get("/api/article?query=" + query).then(m => {
+    //     this.articles = m.data;
+    //     console.log('query is ' + query);
+    //     for (let t in this.articles) {
+    //       console.log('渲染前：' + this.articles[t].content);
+    //       this.articles[t].content = this.$markdownIt().render(this.articles[t].content);
+    //       console.log('渲染后：' + this.articles[t].content);
+    //     }
+    //   });
+    // } else {
+    //   // 无参情况
+    //   this.$axios.get("/api/article/all").then(m => {
+    //     this.articles = m.data;
+        
+    //     for (let t in this.articles) {
+    //       this.articles[t].content = this.$markdownIt().render(this.articles[t].content);
+    //     }
+    //   });
+    // }
+    // this.$store.commit("setQuery", "");
+  },
+
+  activated() {
+    console.log("I'm acitvied");
   },
 
   methods: {
@@ -53,7 +98,12 @@ export default {
       // 设置 vuex 中的 article.id 为选中的文章id
       this.$store.commit('setArticle', id);
       this.$router.push('/detail');
+    },
+
+    mdsToHtml(texts) {
+      
     }
+
   }
 };
 </script>

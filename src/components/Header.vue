@@ -10,7 +10,7 @@
             <Col span="9"></col>
             <Col span="5">
                 <MenuItem name="1">
-                    <Input search placeholder="搜索相关文章" v-model="query" :on-enter="search"/>
+                    <Input search placeholder="搜索相关文章" v-model="query" @on-enter="search"/>
                 </MenuItem>
             </col>
             <Col span="6">
@@ -54,6 +54,7 @@ export default {
         },
 
         search() {
+            console.log('you clicked the search input');
             if (this.query.trim() == '') {
                 alert('请输入查询内容！');
                 return;
