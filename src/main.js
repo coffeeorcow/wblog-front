@@ -17,6 +17,21 @@ import markdownIt from 'markdown-it'
 
 Vue.config.productionTip = false
 
+// login 验证
+router.beforeEach((to, from, next) => {
+  let currentPath = to.path;
+  console.log(currentPath);
+  if (currentPath == '/articles' || currentPath == '/comments'
+    || currentPath == '/user' || currentPath == '/password'
+    || currentPath == '/publish') {
+      if (!store.state.isLogin) {
+        alert('请先登录！');
+        next({path: '/login'});
+      }
+    }
+  next();
+});
+
 Vue.use(iView);
 Vue.use(iEditor);
 

@@ -40,7 +40,10 @@ export default new Router({
     {
       // 发表文章
       path: '/publish',
-      component: Publish
+      component: Publish,
+      beforeEnter: (to, from , next) => {
+        
+      }
     },
     {
       // 我的文章
