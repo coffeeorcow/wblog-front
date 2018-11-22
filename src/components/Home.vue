@@ -36,6 +36,7 @@ export default {
 
   watch: {
     getQuerys(val) {
+      console.log('query 发生变化')
       this.query = val;
       if (this.query != "") {
       // 有参情况
@@ -43,9 +44,7 @@ export default {
         this.articles = m.data;
         console.log('query is ' + this.query);
         for (let t in this.articles) {
-          console.log('渲染前：' + this.articles[t].content);
           this.articles[t].content = this.$markdownIt().render(this.articles[t].content);
-          console.log('渲染后：' + this.articles[t].content);
         }
       });
     } else {
@@ -58,7 +57,7 @@ export default {
         }
       });
     }
-    this.$store.commit("setQuery", "");
+    this.$store.commit('setQuery', '');
     }
   },
 
@@ -75,21 +74,17 @@ export default {
     //       console.log('渲染后：' + this.articles[t].content);
     //     }
     //   });
-    // } else {
-    //   // 无参情况
-    //   this.$axios.get("/api/article/all").then(m => {
-    //     this.articles = m.data;
+    // } else 
+    if (query == ''){
+      // 无参情况
+      this.$axios.get("/api/article/all").then(m => {
+        this.articles = m.data;
         
-    //     for (let t in this.articles) {
-    //       this.articles[t].content = this.$markdownIt().render(this.articles[t].content);
-    //     }
-    //   });
-    // }
-    // this.$store.commit("setQuery", "");
-  },
-
-  activated() {
-    console.log("I'm acitvied");
+        for (let t in this.articles) {
+          this.articles[t].content = this.$markdownIt().render(this.articles[t].content);
+        }
+      });
+    }
   },
 
   methods: {
@@ -98,12 +93,7 @@ export default {
       // 设置 vuex 中的 article.id 为选中的文章id
       this.$store.commit('setArticle', id);
       this.$router.push('/detail');
-    },
-
-    mdsToHtml(texts) {
-      
     }
-
   }
 };
 </script>

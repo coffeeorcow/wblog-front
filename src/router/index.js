@@ -10,6 +10,7 @@ import About from '@/components/About'
 import Reg from '@/components/Reg'
 import Publish from '@/components/Publish'
 import Login from '@/components/Login'
+import Edit from '@/components/Edit'
 
 
 Vue.use(Router)
@@ -41,14 +42,16 @@ export default new Router({
       // 发表文章
       path: '/publish',
       component: Publish,
-      beforeEnter: (to, from , next) => {
-        
-      }
     },
     {
       // 我的文章
       path: '/articles',
       component: Articles
+    },
+    {
+      // 文章编辑
+      path: '/edit',
+      component: Edit
     },
     {
       // 我的评论

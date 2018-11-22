@@ -8,9 +8,13 @@
                 </Tag>
                 <br><br><hr class="divide-line"/><br><br>
             </div>
-            <div class="content" v-html="article.content">
-            </div>
+            <div class="content" v-html="article.content"></div>
+            <br><br>
             <div class="comment">
+                <h1> 评论区 </h1>
+                <br>
+                <Input style="width: 700px" v-model="comment" type="textarea" :autosize="true" placeholder="对作者说点什么有好的话~" />
+                <Button icon="ios-chatbubbles" type="success"></Button>
             </div>
         </Col>
         <Col span="6">
@@ -50,6 +54,7 @@ export default {
               avatar: ''
           }
       },
+      comment: '',
       color: ['red', 'green', 'blue', 'volcano', 'purple', 'lime', 'orange', 'gold', 'yellow'],
       createdTime: '',
       msg: ''
@@ -63,7 +68,6 @@ export default {
         this.createdTime = new Date(String(this.article.createdTime).replace('T', ' ').replace('-', '/').slice(0, 19));
         this.article.content = this.$markdownIt().render(this.article.content);
     });
-    this.msg = this.$markdownIt().render('# markdownIt ruzzle');
   }
 };
 </script>
@@ -73,8 +77,12 @@ export default {
   margin-top: 20px;
 }
 .divide-line {
-    border: 0;
+    /* border: 0;
     height: 0;
-    box-shadow: 0 0 10px 1px black;
+    box-shadow: 0 0 10px 1px black; */
+}
+.comment {
+    margin-left: 5px;
+    box-shadow:-5px -5px 10px rgba(0, 0, 0, 0.24);
 }
 </style>

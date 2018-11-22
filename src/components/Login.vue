@@ -36,7 +36,6 @@ export default {
         password: this.password
       })
       .then(res => {
-        console.log(res.data);
         let code = res.data.code;
         if (code == 'success') {
           // 存储用户信息
@@ -49,7 +48,7 @@ export default {
           .catch(error => {
             console.log(error);
           });
-          this.$router.go(-1);
+          this.$router.push('/');
         } else {
           this.msg = res.data.msg;
         }
