@@ -80,6 +80,8 @@ export default {
       this.$axios.get("/api/article/all").then(m => {
         this.articles = m.data;
         
+        console.log(this.articles);
+
         for (let t in this.articles) {
           this.articles[t].content = this.$markdownIt().render(this.articles[t].content);
         }
