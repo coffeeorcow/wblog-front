@@ -47,7 +47,7 @@ export default {
                 console.log('clicked link of logout');
                 this.$store.commit('clearInfo');
                 this.$router.push('/');
-                this.$axios.get('/api/logout')
+                this.$axios.get('/logout')
                 .then(msg => console.log(msg.data));
                 alert('注销成功');
             }

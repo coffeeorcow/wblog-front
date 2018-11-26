@@ -60,7 +60,7 @@ export default {
                 return;
             }
             // 注册用户
-            this.$axios.post('/api/registry', {
+            this.$axios.post('/registry', {
                 "userName": this.userName,
                 "password": this.password,
                 "email": this.email
@@ -70,7 +70,7 @@ export default {
                 if (code == 'success') {
                     // 存储用户信息
                     let user = {}
-                    this.$axios.get('/api/user/name?userName='+ this.userName)
+                    this.$axios.get('/user/name?userName='+ this.userName)
                     .then(u => {
                         user = u.data;
                         this.$store.commit("setInfo", user);

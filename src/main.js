@@ -34,6 +34,7 @@ router.beforeEach((to, from, next) => {
 Vue.use(iView);
 Vue.use(iEditor);
 
+axios.defaults.baseURL = '/api';
 Vue.prototype.$axios = axios;
 
 Vue.prototype.$markdownIt = markdownIt;

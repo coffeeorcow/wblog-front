@@ -37,7 +37,7 @@ export default {
                 this.msg = '两次密码输入不一致'
                 return;
             }
-            this.$axios.post('/api/user/pwd', {
+            this.$axios.post('/user/pwd', {
                 "id": String(this.$store.state.user.id),
                 "oldpwd": this.oldpwd,
                 "newpwd": this.newpwd

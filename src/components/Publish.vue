@@ -106,7 +106,7 @@ export default {
 
             // 发表文章
             console.log(this.article);
-            this.$axios.post('/api/article/add', this.article)
+            this.$axios.post('/article/add', this.article)
             .then(m => {
                 console.log(m.data);
             });
@@ -134,7 +134,7 @@ export default {
                 this.loading = true;
                 // 请求分类信息
                 // console.log('query:' + query);
-                this.$axios.get('/api/cate/like?cateName=' + query)
+                this.$axios.get('/cate/like?cateName=' + query)
                 .then(m => {
                     this.cates = m.data;
                     this.loading = false;
@@ -142,7 +142,7 @@ export default {
             } else {
                 this.loading = true;
                 // console.log('query is : ' + query);
-                this.$axios.get('/api/cate/all')
+                this.$axios.get('/cate/all')
                 .then(m => {
                     this.cates = m.data;
                     this.loading = false;

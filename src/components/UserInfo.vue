@@ -55,7 +55,7 @@ export default {
 
     methods: {
         update() {
-            this.$axios.post('/api/user/update', {
+            this.$axios.post('/user/update', {
                 "id": this.user.id,
                 "userName": this.user.userName,
                 "email": this.user.email,

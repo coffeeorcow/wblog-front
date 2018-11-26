@@ -16,11 +16,11 @@
                 <Input style="width: 90%;" v-model="comment" type="textarea" :autosize="true" placeholder="对作者说点什么友好的话~" />
                 <Button icon="ios-chatbubbles" type="success" @click="addComment"></Button>
             </Card>
-            <Card v-for="(item, index) in article.comments" :key="index">
+            <Card v-for="(item, index) in comments" :key="index">
                 <div slot="title">
-                    <Avatar v-if="article.user.avatar == null || article.user.avatar == ''"
-                            icon="ios-person">{{ article.user.userName }}</Avatar>
-                    <Avatar v-else="item" :src="article.user.avatar"></Avatar>
+                    <Avatar v-if="item.user.avatar == null || item.user.avatar == ''"
+                            icon="ios-person">{{ item.user.userName }}</Avatar>
+                    <Avatar v-else :src="item.user.avatar"></Avatar>
                     <span>{{ }} </span>
                     <span>发布在：<Time :time="item.createdTime" /></span>
                 </div>
@@ -33,7 +33,7 @@
                     <div slot="title">
                         <Avatar v-if="article.user.avatar == null || article.user.avatar == ''"
                             icon="ios-person">{{ article.user.userName }}</Avatar>
-                        <Avatar v-else="item" :src="article.user.avatar"></Avatar>
+                        <Avatar v-else :src="article.user.avatar"></Avatar>
                         <span>  {{ article.user.userName }} </span>
                     </div>
                     <p> 分类：{{ article.cate.cateName }}</p>
@@ -62,10 +62,10 @@ export default {
           user: {
               userName: '',
               avatar: ''
-          },
-          comments: []
+          }
       },
       comment: '',
+      comments: [],
       color: ['red', 'green', 'blue', 'volcano', 'purple', 'lime', 'orange', 'gold', 'yellow'],
       createdTime: '',
       msg: ''
@@ -74,13 +74,12 @@ export default {
 
   mounted() {
     let id = this.$store.state.article.id;
-    this.$axios.get("/api/article/get?id=" + id).then(m => {
+    this.$axios.get("/article/get?id=" + id).then(m => {
         this.article = m.data;
         this.createdTime = new Date(String(this.article.createdTime).replace('T', ' ').replace('-', '/').slice(0, 19));
         this.article.content = this.$markdownIt().render(this.article.content);
-        for (let i in this.article.comments) {
-            this.article.comments[i].createdTime = new Date(String(this.article.comments[i].createdTime).replace('T', ' ').replace('-', '/').slice(0, 19));
-        }
+        this.$axios.get('/comment/article?articleId=' + this.article.id)
+        .then(m1 => this.comments = m1.data);
     });
   },
 
@@ -96,7 +95,7 @@ export default {
           let comment = this.comment.trim();
           let articleId = this.article.id;
           console.log('id is ' + articleId);
-          this.$axios.post('/api/comment/add', {
+          this.$axios.post('/comment/add', {
               "content": comment,
               "article": {
                   "id": articleId

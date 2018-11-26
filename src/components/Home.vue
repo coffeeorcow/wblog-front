@@ -40,7 +40,7 @@ export default {
       this.query = val;
       if (this.query != "") {
       // 有参情况
-      this.$axios.get("/api/article?query=" + this.query).then(m => {
+      this.$axios.get("/article?query=" + this.query).then(m => {
         this.articles = m.data;
         console.log('query is ' + this.query);
         for (let t in this.articles) {
@@ -49,7 +49,7 @@ export default {
       });
     } else {
       // 无参情况
-      this.$axios.get("/api/article/all").then(m => {
+      this.$axios.get("/article/all").then(m => {
         this.articles = m.data;
         
         for (let t in this.articles) {
@@ -63,21 +63,9 @@ export default {
 
   mounted() {
     let query = this.$store.state.query;
-    // if (query != "") {
-    //   // 有参情况
-    //   this.$axios.get("/api/article?query=" + query).then(m => {
-    //     this.articles = m.data;
-    //     console.log('query is ' + query);
-    //     for (let t in this.articles) {
-    //       console.log('渲染前：' + this.articles[t].content);
-    //       this.articles[t].content = this.$markdownIt().render(this.articles[t].content);
-    //       console.log('渲染后：' + this.articles[t].content);
-    //     }
-    //   });
-    // } else 
     if (query == ''){
       // 无参情况
-      this.$axios.get("/api/article/all").then(m => {
+      this.$axios.get("/article/all").then(m => {
         this.articles = m.data;
         
         console.log(this.articles);

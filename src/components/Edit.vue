@@ -21,13 +21,13 @@ export default {
 
     mounted() {
         let id = this.$store.state.article.id;
-        this.$axios.get('/api/article/get?id=' + id)
+        this.$axios.get('/article/get?id=' + id)
         .then(m => this.article = m.data);
     },
 
     methods: {
         updateArticle() {
-            this.$axios.post('/api/article/update', {
+            this.$axios.post('/article/update', {
                 "id": this.article.id,
                 "title": this.article.title,
                 "content": this.article.content

@@ -25,7 +25,7 @@ export default {
     },
 
     mounted() {
-        this.$axios.get('/api/article/user?id=' + this.$store.state.user.id)
+        this.$axios.get('/article/user?id=' + this.$store.state.user.id)
         .then(m => {
             this.articles = m.data;
             for (let t in this.articles) {
